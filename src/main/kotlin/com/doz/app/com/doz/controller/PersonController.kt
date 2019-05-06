@@ -3,7 +3,6 @@ package com.doz.app.com.doz.controller
 import com.doz.app.com.doz.model.NameAndId
 import com.doz.app.com.doz.model.Person
 import com.doz.app.com.doz.service.PersonService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Slice
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(value = ["/persons"])
-class PersonController(@Autowired private val personService: PersonService) {
+class PersonController(private val personService: PersonService) {
 
     @PostMapping
     fun addPerson(@RequestBody person: Person): Person {
@@ -71,7 +70,7 @@ class PersonController(@Autowired private val personService: PersonService) {
     fun getPersonsByForenameAndName(
             @RequestParam("forename") forename: String,
             @RequestParam("name") name: String,
-            pageable: Pageable):Page<Person> {
+            pageable: Pageable): Page<Person> {
         return personService.getPersonsByForenameAndName(forename, name, pageable)
     }
 }
