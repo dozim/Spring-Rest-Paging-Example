@@ -9,7 +9,6 @@ import org.springframework.data.domain.Slice
 import org.springframework.data.web.PagedResourcesAssembler
 import org.springframework.hateoas.PagedResources
 import org.springframework.hateoas.Resource
-import org.springframework.util.concurrent.ListenableFuture
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -54,16 +53,6 @@ class PersonController(private val personService: PersonService) {
     @GetMapping("/slice")
     fun getPersonsAsSlice(pageable: Pageable): Slice<Person> {
         return personService.findPersonByNameIsNotNull(pageable = pageable)
-    }
-
-    @GetMapping("/async")
-    fun getPersonsAsync(forename: String): ListenableFuture<Person> {
-        return personService.getOneByForename(forename)
-    }
-
-    @GetMapping("/testdata")
-    fun getPersonsTestData(): List<Person> {
-        return personService.getPersonTestData()
     }
 
     @GetMapping(params = ["forename", "name"])
